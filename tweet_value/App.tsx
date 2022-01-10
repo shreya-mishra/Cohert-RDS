@@ -1,114 +1,155 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+// import React, {useState} from 'react';
+// import {
+//   Alert,
+//   SafeAreaView,
+//   StyleSheet,
+//   Text,
+//   TextInput,
+//   View,
+// } from 'react-native';
 
-import React from 'react';
+// const App: React.FC = () => {
+//   const [tweetText, setTweetText] = useState<string>();
+//   const [charactersRemaining, setCharactersRemaining] = useState(280);
+//   const [textFontColor, setTextFontColor] = useState('black');
+//   const handleChangeText = () => {
+//     // if (currentLength >= 280) {
+//     //   setTextFontColor('red');
+//     // } else {
+//     //   setTextFontColor('black');
+//     // }
+//     // setCharactersRemaining(280 - currentText.length);
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeAreaContainer}>
+//       <Text style={styles.header}>Tweet Value Count</Text>
+//       <View style={styles.container}>
+//         <TextInput
+//           style={styles.input}
+//           multiline={true}
+//           onChangeText={e => {
+//             setTweetText(e);
+//             // handleChangeText;
+//             if (e.length >= 280) {
+//               setTextFontColor('red');
+//             } else {
+//               setTextFontColor('black');
+//             }
+//             setCharactersRemaining(280 - e.length);
+//           }}
+//           placeholder="What's Happening?"
+//         />
+//         <Text style={{color: textFontColor, fontSize: 30}}>
+//           {charactersRemaining} characters remaining!
+//         </Text>
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   safeAreaContainer: {
+//     flex: 1,
+//   },
+//   header: {
+//     alignItems: 'center',
+//     marginTop: 20,
+//     fontSize: 30,
+//     color: 'black',
+//     fontWeight: 'bold',
+//     textAlign: 'center',
+//   },
+//   container: {
+//     flex: 1,
+//     justifyContent: 'flex-start',
+//     alignItems: 'center',
+//     marginTop: 30,
+//   },
+//   input: {
+//     height: 200,
+//     borderWidth: 1,
+//     padding: 10,
+//     width: '90%',
+//     fontSize: 25,
+//   },
+// });
+
+// export default App;
+
+import React, {useState} from 'react';
 import {
+  Alert,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TextInput,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const MAX_TWEET_LENGTH = 3;
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+const App: React.FC = () => {
+  const [tweetText, setTweetText] = useState<string>('');
+  console.log(tweetText);
+  const accentColor = tweetText.length > MAX_TWEET_LENGTH ? 'red' : 'black';
+  const remainingCount = MAX_TWEET_LENGTH - tweetText.length;
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  // Sample Test
+  // 3 characters remaining components is rendering or not ???
+  // 2 variations of above component =>
+  // a => black : b => red
+  // as you are typing is that value is increasing or not
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // now TextInput
+  // well document => ember testing =>
+
+  // Controlled Input
+  const myObject = {
+    color: accentColor,
+    fontSize: 30,
   };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={styles.safeAreaContainer}>
+      <Text style={styles.header}>Tweet Value Count</Text>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input} //react binidng
+          multiline={true}
+          value={tweetText}
+          onChangeText={setTweetText}
+          placeholder="What's Happening?"
+        />
+        <Text style={myObject}>{remainingCount} characters remaining!</Text>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  safeAreaContainer: {
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  header: {
+    alignItems: 'center',
+    marginTop: 20,
+    fontSize: 30,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 30,
   },
-  highlight: {
-    fontWeight: '700',
+  input: {
+    height: 200,
+    borderWidth: 1,
+    padding: 10,
+    width: '90%',
+    fontSize: 25,
   },
 });
 
